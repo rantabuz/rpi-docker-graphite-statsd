@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.22
+FROM sdhibit/rpi-baseimage
 MAINTAINER Denys Zhdanov <denis.zhdanov@gmail.com>
 
 RUN apt-get -y update \
@@ -36,7 +36,8 @@ RUN if [ ! -z "${CONTAINER_TIMEZONE}" ]; \
 RUN pip install --upgrade pip && \
   pip install django==1.8.18 \
   python-memcached==1.53 \
-  txAMQP==0.6.2
+  txAMQP==0.6.2 \
+  pyopenssl
 
 ARG version=1.0.2
 ARG whisper_version=${version}
@@ -106,6 +107,8 @@ ADD conf/etc/service/nginx/run /etc/service/nginx/run
 # default conf setup
 ADD conf /etc/graphite-statsd/conf
 ADD conf/etc/my_init.d/01_conf_init.sh /etc/my_init.d/01_conf_init.sh
+
+RUN pip install pyopenssl
 
 # cleanup
 RUN apt-get clean\
