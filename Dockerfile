@@ -34,10 +34,10 @@ RUN if [ ! -z "${CONTAINER_TIMEZONE}" ]; \
 
 # fix python dependencies (LTS Django and newer memcached/txAMQP)
 RUN pip install --upgrade pip && \
-  pip install django==1.8.18 \
+  pip install Twisted==16.0.0 \
+  django==1.8.18 \
   python-memcached==1.53 \
-  txAMQP==0.6.2 \
-  pyopenssl
+  txAMQP==0.6.2 
 
 ARG version=1.0.2
 ARG whisper_version=${version}
