@@ -3,8 +3,9 @@ MAINTAINER Denys Zhdanov <denis.zhdanov@gmail.com>
 
 RUN apt-get -y update \
   && apt-get -y upgrade \
-  && apt-get -y install vim \
-  nginx \
+  && apt-get -y install vim 
+
+RUN nginx \
   python-dev \
   python-flup \
   python-pip \
@@ -19,8 +20,9 @@ RUN apt-get -y update \
   python-cairo \
   python-rrdtool \
   pkg-config \
-  nodejs \
-  && rm -rf /var/lib/apt/lists/*
+  nodejs 
+
+RUN rm -rf /var/lib/apt/lists/*
 
 # choose a timezone at build-time
 # use `--build-arg CONTAINER_TIMEZONE=Europe/Brussels` in `docker build`
