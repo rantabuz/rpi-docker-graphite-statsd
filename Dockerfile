@@ -63,10 +63,21 @@ WORKDIR /usr/local/src/carbon
 RUN pip install -r requirements.txt \
   && python ./setup.py install
 
+# workaround cairocffi bug by installing the latest version of cffi first
+RUN  pip install -U cffi \
+  && pip install cairocffi
+
+
 # install graphite
 RUN git clone -b ${graphite_version} --depth 1 ${graphite_repo} /usr/local/src/graphite-web
 WORKDIR /usr/local/src/graphite-web
-RUN pip install -r requirements.txt \
+#
+# Install an old version o whitenoise before 'requirements.txt' lets pip install version 4.0,
+#   which is incompatible with the configuration files 
+#RUN pip install -r requirements.txt \
+#  && python ./setup.py install
+RUN pip install 'whitenoise<4.0' \
+  && pip install -r requirements.txt \
   && python ./setup.py install
 
 # install statsd
